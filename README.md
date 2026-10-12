@@ -1,28 +1,127 @@
 # Storyline Memory
 
-**A player-reviewed, three-layer narrative memory workflow.**
+**用三个连续的历史切面，统一管理世界、人物经历与人物认知。**
 
-Storyline Memory represents a continuing story through exactly three kinds of records:
+Storyline Memory 是一个由玩家主动触发、审核后提交的长期语C记忆工作流。核心不是为世界书和角色卡追加记忆，而是把它们的内容放进开场前的 Storyline，与后续剧情沿同一结构持续发展。
 
-1. Macro-level objective history.
-2. Each character's objective experiences, including experiences they have forgotten.
-3. Each character's subjective knowledge, beliefs, memories and interpretations.
+**Concept and design direction: NakanoIchirou.** Initial workflow and prototype prepared with Codex assistance on **2026-10-13**.
 
-Pre-story history (`T < 0`) and later events (`T >= 0`) use the same structure. Worldbooks and character cards can be source material or derived views; they are not separate authoritative settings.
+## 为什么是三个切面？
 
-## Design
+把正在演绎的故事想成一个包含时间、人物、行为和信息的整体。我们不尝试完整保存这个整体，而是留下三个具有不同职责的有损投影：
 
-Players explicitly submit TXT batches. An LLM uses [SKILL.md](SKILL.md) to summarize meaningful changes by scene, event and story time. The player reviews the draft before it becomes a committed version. Events can continue across files, and complete versions can be restored.
+| 切面 | 观察尺度与视角 | 核心问题 |
+| --- | --- | --- |
+| 第一层：宏观客观历史 | 世界尺度，客观视角 | 世界发生了什么变化？ |
+| 第二层：个人客观经历 | 单个角色的尺度，客观视角 | 这个人实际经历了什么？ |
+| 第三层：个人主观认知 | 单个角色的尺度，主观视角 | 这个人感知、记住和理解了什么？ |
 
-Characters receive only their currently available subjective cognition and approved perception. Their objective records remain on the world-management side. Forgotten history can support an approved feeling of familiarity without exposing its hidden cause.
+“切面”或“投影”是信息组织的比喻，不是严格的几何运算。每个切面只保留对自身有意义的信息，三者合在一起也不保证还原全部原始剧情。
 
-Tracked characters' off-screen experiences are proposed at player-triggered story-time checkpoints. There is no real-time world simulation, automatic cast management, per-turn monitoring, Galgame frontend or personality parameter engine.
+### 第一层：世界的宏观历史
 
-## Minimal prototype
+记录政治、制度、社会、经济及环境等对故事有意义的世界变化，也容纳必要的初始地理和环境事实。
 
-The Python standard-library helper provides draft preparation, approval hashes, whole-state snapshots, TXT content deduplication, rollback and filtered character-context export. It does not understand TXT, call an LLM or run character agents. The approval hash binds the reviewed content; it is not user authentication.
+它不记录每个人的全部生活。两个人在咖啡馆相识，可能完全不进入宏观层；一场城市封锁或制度改革，则可能需要进入宏观层。
 
-Read [the local workflow and JSON format](references/local-workflow.md) for usage. The prototype follows its original Windows project convention of storing working data on drive D.
+因此，**第一层不是全知事件总库，也不是第二层的完整来源。** 个人经历可以来自私人场景，不能仅靠宏观历史推导出来。
+
+### 第二层：这个人客观上经历过的事
+
+记录实际发生在某名角色身上的重要行动、互动、遭遇与关系事实。即使角色后来遗忘、误解或没有意识到事件的意义，这段经历仍可保留。
+
+同一事件可以进入多名参与者的个人客观记录，并沿用共同事件标识。记录共同经历不要求他们拥有相同的记忆或解释。
+
+这里的“客观”指故事中已经确立的发生事实，不代表系统保存了每一句话或全部细节。**摘要没有提到某件事，不能据此认定它没有发生。**
+
+### 第三层：这个人如何认识自己的人生
+
+记录角色的感知、记忆、信念、误解、情感倾向与心路历程，以及这些内容随时间的变化。
+
+角色可以误解他人，改变对过去的解释，忘记具体经历，也可以保留说不清来源的倾向。第三层不要求人物永远符合开场人设，更不要求人物的理解始终正确。
+
+但整理者不能把自己推测的心理动机悄悄确立下来。原文只表现沉默时，“已经原谅对方”仍是待确认解释；原文明确写出的心理活动，才有相应归档依据。
+
+历史主观记录与当前可用认知也要区分：一段过去曾记得、如今已经遗忘的具体信息，不能因为仍在历史档案中就重新注入角色。
+
+## 同一段剧情怎样形成三个切面？
+
+假设A与B年轻时在咖啡馆共同听过一段旋律，多年后A忘记了这次相遇，B仍记得：
+
+| 记录 | 内容 |
+| --- | --- |
+| 宏观客观历史 | 这次私人相遇没有宏观影响，可以不记录。 |
+| A、B的个人客观经历 | 两人曾共同听过旋律。这个事实不因A遗忘而消失。 |
+| A的个人主观认知 | 已经不记得那次相遇，也不知道旋律来源。 |
+| B的个人主观认知 | 仍记得当时的相遇，对它有自己的理解。 |
+
+后来A再次听见旋律，世界管理侧可以依据客观经历，提出获准的感知：
+
+> 这段旋律让你产生了一种难以解释的熟悉感。
+
+角色侧不会同时收到“因为你当年与B一起听过”的客观原因。是否恢复具体记忆，需要后续剧情与认知变化，而不是读取后台档案就自动想起。
+
+这就是第二层到第三层的**受控传递**。它描述信息边界，不宣称建立了真实心理学的因果模拟。
+
+## 世界书和角色卡如何归入 T＜0？
+
+**T=0 是本次故事中玩家开始参与的锚点。** 它不意味着世界此前没有历史，也不意味着角色此前没有人生。
+
+T＜0与T≥0使用完全相同的三层组织方式：
+
+| 传统素材 | 开场前如何落位 | 开场后怎样延续 |
+| --- | --- | --- |
+| 世界书中的历史、制度形成与社会变迁 | 第一层的既往宏观历史 | 追加新的世界变化 |
+| 世界书中的初始地理、环境与当前制度事实 | 第一层的初始事实，注明时间或适用范围 | 在故事确立变化后更新 |
+| 角色卡中的身份、履历、相识与实际关系 | 该角色第二层的既往客观经历 | 追加新的经历与互动 |
+| 角色卡中的记忆、信念、性格表现及心理状态 | 该角色第三层的前史或开场状态 | 记录认知与心路历程的变化 |
+| 玩家行动权限、叙事风格等语C规则 | 单独保留为运行约束 | 约束演绎与归档方式 |
+
+首次创建时，玩家可以直接填写三层的既往部分，也可以让AI把已有世界书和角色卡整理成初始草案。审核后，正式设定沿这三条历史继续发展；旧素材可以保留溯源，但不再作为另一套并行权威与Storyline争夺“现在是什么样”。
+
+**统一结构不意味着必须把所有设定编成事件。** 已知地理可以作为初始事实；“开场时性格冷淡”可以直接作为初始主观状态。尚未设定的童年或性格成因保持留白，不为了填满T＜0而编造。
+
+开场时成立的状态也不是永久命令。角色可以变化，制度可以改革，关系可以发展；已经确立的过去则不能被悄悄改写。
+
+## 哪些东西固定，哪些东西可以换？
+
+“硬编码”需要分清三个层次：
+
+| 类别 | 例子 | 处理方式 |
+| --- | --- | --- |
+| 固定的组织与权限机制 | 三层职责；角色不能读取第二层；草案须审核后提交；版本须能完整回滚 | 作为本方案的机制保持稳定；重大调整先确认 |
+| 可配置的运行规则 | 叙事语气、按场景分段、玩家行动权限、某个模组明确规定的生成约束 | 独立于故事事实配置；不必写死进程序 |
+| 世界与人物内容 | 地名、开场年代、立法会席位、人物关系、性格、认知与具体历史 | 填入相应Storyline，随获批剧情或明确修订变化 |
+
+例如，“角色不能直接读取个人客观档案”是权限规则；“立法会当前有一百席”是某时刻的世界事实。不能把一百席写成永远不能变化的程序常量，也不能把“角色开场冷淡”写成此后必须永远冷淡的行为命令。
+
+同样，记录结构可以固定，但记录里的世界名称、人物名单和时间内容应可替换。换世界时重新填写前史，复用组织与归档方式即可。
+
+作者若明确指定某项不可变的世界运行约束，应把它标明为运行规则；不能只因一条设定目前很确定，就自行把它升级为永久规则。没有指定的权重、阈值、遗忘公式或数值人格参数，也不作为默认硬编码加入。
+
+规则负责“怎样演绎和处理信息”，Storyline负责“已经发生了什么，以及每个人怎样理解它”。规则不是第四条Storyline。
+
+## 玩家主动归档，而非每轮自动更新
+
+正常语C先发生故事。玩家准备归档时提交TXT，工作流才按场景、事件与故事时间提取三层增量：
+
+1. 阅读本批文本与相关旧摘要。
+2. 续接跨TXT的开放事件；文件结束不代表事件结束。
+3. 在玩家确认的故事时间检查点，提出未登场受追踪角色的幕后补全。
+4. 展示精炼增量、证据与真正需要玩家决定的选项。
+5. 玩家批准后统一提交版本；需要时恢复旧版。
+
+玩家决定追踪谁、何时归档及哪些变更成立。AI负责整理和核查，不替玩家填定心理解释，不自动扩大角色名单，也不让幕后角色逐轮常驻运行。
+
+原始TXT、事件标识和版本快照是溯源设施，不是额外叙事层。保留原文不意味着每次调用都必须把它读进上下文。
+
+## 当前交付与验证范围
+
+[SKILL.md](SKILL.md) 是可供LLM执行的初始化与归档规范。[本地工作流程](references/local-workflow.md)介绍可选的Python标准库工具：草案、批准散列、版本快照、输入去重、回滚和角色包导出。
+
+工具不理解TXT、不调用模型、不运行角色Agent。批准散列绑定草案内容，不是用户认证；角色包过滤也不能替代宿主的文件、工具与历史访问权限。
+
+最小原型已通过**8项机械测试**。这些合成小样本不证明长篇语义摘要质量、长期叙事效果、实际Token优势或硬访问隔离。当前工具适用于单玩家串行使用，并保留原工程在Windows下将工作数据放在D盘的约定；此路径约定不是三层模型的必要组成部分。
 
 ```powershell
 $env:TEMP = 'D:\CodexProject\Storyline-Memory\.tmp'
@@ -33,18 +132,14 @@ New-Item -ItemType Directory -Force $env:TEMP | Out-Null
 python scripts/test_storyline.py
 ```
 
-The initial prototype passed **8 mechanical tests**, covering pre-zero initialization, private events, cross-file continuation, approval binding, character-package filtering, complete rollback, cast fade-out without deleting archives, and snapshot integrity.
+## 设计参考
 
-These authored small fixtures do not establish general LLM summarization accuracy, long-term narrative quality, token savings or hard access isolation. A character package does not prevent a host agent from reading shared files; runtime permissions must enforce that boundary separately. This is a single-player, sequential local prototype.
+[来源与取舍](references/sources.md)说明对Smart Memory及现有记忆Skill的选择性借鉴。本项目没有复制上游程序实现，也不宣称动态记忆或三类信息划分从未有人提出。
 
-## 中文说明
+### English overview
 
-三层分别回答：世界发生了什么、这个人实际经历了什么、这个人如何认知自己的人生。T=0 是玩家参与的锚点，不是数据结构分界。
+Storyline Memory maintains three continuous, lossy views: macro-level objective history, each character's objective experiences, and each character's subjective cognition. Pre-story worldbook and character-card content becomes the `T < 0` portion of those same records; `T = 0` marks player participation, not a schema boundary.
 
-归档由玩家主动触发，AI 提取增量并检查冲突，玩家批准后统一提交。未记载不等于未发生；沉默不自动等于原谅；补录客观历史不自动让角色恢复记忆。审核优先提供证据与简短选项，避免把玩家变成档案录入员。
+Stable mechanisms define layer responsibilities, access rules, review and versioning. Configurable roleplay rules remain operational constraints. Setting facts, character states and story events belong in Storyline records rather than permanent program constants.
 
-## Attribution and references
-
-Concept and design direction: **NakanoIchirou**. Initial workflow and prototype prepared with Codex assistance on **2026-10-13**. This publication records this implementation and its design scope; it makes no claim that dynamic memory or three-way information models are unprecedented.
-
-See [sources and design review](references/sources.md) for selectively adopted ideas from Smart Memory and existing agent-memory skills. No upstream implementation was copied into this prototype.
+Players explicitly archive TXT batches, review meaningful changes and commit complete versions. Character inputs contain only authorized cognition and perception; hard isolation requires actual runtime access controls.
