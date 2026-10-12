@@ -149,7 +149,7 @@ T＜0与T≥0使用完全相同的三层组织方式：
 
 工具不理解TXT、不调用模型、不运行角色Agent。批准散列绑定草案内容，不是用户认证；角色包过滤也不能替代宿主的文件、工具与历史访问权限。
 
-最小原型已通过**8项机械测试**。这些合成小样本不证明长篇语义摘要质量、长期叙事效果、实际Token优势或硬访问隔离。当前工具适用于单玩家串行使用，并保留原工程在Windows下将工作数据放在D盘的约定；此路径约定不是三层模型的必要组成部分。
+最小原型已通过**10项机械测试（8项归档测试与2项目录初始化测试）**。这些合成小样本不证明长篇语义摘要质量、长期叙事效果、实际Token优势或硬访问隔离。当前工具适用于单玩家串行使用，并保留原工程在Windows下将工作数据放在D盘的约定；此路径约定不是三层模型的必要组成部分。
 
 ```powershell
 $env:TEMP = 'D:\CodexProject\Storyline-Memory\.tmp'
@@ -157,7 +157,7 @@ $env:TMP = $env:TEMP
 $env:TMPDIR = $env:TEMP
 $env:PYTHONDONTWRITEBYTECODE = '1'
 New-Item -ItemType Directory -Force $env:TEMP | Out-Null
-python scripts/test_storyline.py
+python -m unittest discover -s scripts -p 'test_*.py' -v
 ```
 
 ## 设计参考
