@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.tmp/
+.cache/
+storyline-data/
+request.json
+proposal.json
