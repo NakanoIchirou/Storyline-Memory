@@ -10,6 +10,12 @@
 
 第三层 availability 由世界侧依据剧情及审核决定。涉及遗忘时须将包含旧秘密的既往主观条目标为 false，保留当前可用认知或残留倾向。工具只做字段筛选，不能识别自然语言中的隐含泄密；角色包必须由世界侧审读。
 
+## 先建立玩家目录
+
+运行 scripts/init_workspace.py --root D:\CodexProject\My-Story --characters Saki，可生成 Rules.md、World-Storyline.md 和 Character/Saki 下的 Objective.md、Subjective.md。这只创建空的 Markdown 模板，不导入设定、模拟角色、提交历史或覆盖已有文件。角色名必须是安全的单个文件夹名，名单由玩家指定。
+
+本节以下的 JSON 版本工具保持原来的结构。它不读取或同步这些 Markdown 文件。选择该工具后，获批 JSON 快照是正式状态；Markdown 只能作版本明确的展示或待导入草稿。转换内容仍须归档侧核查并通过 prepare/commit 审核，不把磁盘文件改动默认为获批历史。
+
 ## 操作
 
 运行前将 TEMP、TMP、TMPDIR 及 Python 缓存定向到 D 盘。本项目不需要新增依赖。以下使用可用的 Python 命令，并假设仓库位于 D 盘示例位置：
