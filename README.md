@@ -134,8 +134,6 @@ Markdown 工作流以审核后的正文为正式记录，版本操作覆盖全�
 
 工具不调用模型，不运行角色 Agent；批准散列防误提交，不是身份认证。角色包过滤不替代宿主文件、工具和会话隔离。Windows 工具保留本工程将数据放在 D 盘的约定，这不是三层模型的必要条件。
 
-不扩展大世界模拟、Galgame 前端、人格引擎或自动监控。按需读取相关摘要，原文不常驻上下文。重大架构调整先征求玩家确认。
-
 [来源与取舍](references/sources.md)说明对 Smart Memory 等实现的选择性借鉴，没有复制上游代码或承诺首创。
 
 English: Two objective slices of story reality, plus a subjective projection of previously recognized personal experience through the character's present state of mind. New knowledge requires authorized perception; a change of interpretation does not reveal hidden objective facts.
