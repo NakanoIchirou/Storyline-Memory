@@ -61,6 +61,6 @@ python $storyScript --root $storyData prepare 'D:\CodexProject\Storyline-Memory\
 - `role A`：只导出 A 当前 availability=true 的第三层正文，不导出来源、真伪标记和客观层。
 - `rollback 版本散列`：恢复整版及输入去重记录；版本文件仍保留。由玩家明确要求后执行。
 
-世界侧批准的新感知可先作为第三层增量记录，再导出角色包，不传递用于生成感知的客观原因。角色包只覆盖最小文字输入边界；宿主工具权限需另行落实。
+`role` 只导出已提交的可用第三层条目，供主 Agent 准备语C输入时参考，不会结合第二层与当前心境自动生成下一段第三层，也不带 Rule 或当前场景。演绎时的新感知与主观转换可在当前上下文中发生，无须先 commit。待玩家主动归档时再整理正式增量。主观转换及分角色传递见 role-flow.md；角色包只覆盖最小文字输入边界，宿主工具权限需另行落实。
 
 `scripts/test_storyline.py` 提供合成小样本机械验证。`scripts/test_projection_case.py` 复现 examples 中按 Skill 人工提取的失约用例，检查心境变化不泄露秘密、获准说法不升级为核实事实、旧认知保留和回滚。测试脚本不调用实际模型或解析 TXT，不证明长篇摘要质量、Token优势或硬访问控制。语义自查过程见 examples/skill-trial.md。
