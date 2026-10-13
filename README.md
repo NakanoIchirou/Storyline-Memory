@@ -1,10 +1,25 @@
 # Storyline Memory
 
-**两个客观切面，一个由既有认知在当前心境下形成的主观投影。**
+**尽可能忠实保留时间轴上的轨迹，以及主客观事件梗概；不以保存具体细节为目标。**
 
 保存长期语C轨迹与历程，并为角色判断提供连续的主观基础。上下文以内的短期记忆由大模型完成；正式档案由玩家主动归档、审核后提交。世界书和角色卡进入同一时间轴的前史，后续剧情沿相同结构延续。
 
+保存的是“发生了什么、怎样发展、角色当时如何认识、后来如何变化”，不是逐句对话、逐个动作或场景描写。原文留作回查，Storyline 用梗概承接故事；事实、关系与认知转折不因省字而被改写。
+
 Concept and design direction: **NakanoIchirou**. Prepared with Codex assistance, 2026-10-13.
+
+## 核心：保存轨迹，逐步微缩细节
+
+| 保留 | 默认不逐项归档 |
+| --- | --- |
+| 故事时间与关键节点顺序 | 每句对话和重复表达 |
+| 事件起因的已知部分、进展与结果 | 动作、语气、服饰与环境描写 |
+| 关系变化、承诺、未解决问题 | 无变化的日常互动 |
+| 谁知道什么、怎样理解、理解怎样变化 | 模型可在当前场景自行完成的表现细节 |
+
+具体细节只有影响事件身份、线索、因果、关系、后续判断，或玩家明确指定时才保留。例如某句话本身就是承诺或暗号，它便不只是描写细节。未明确的因果与心理不补写。
+
+近期记录也用梗概，只在必要节点保持较细粒度。久远且低影响的连续片段合并为时间范围摘要，重要轨迹留下关键节点；不能把漫长认知变化压成“Saki 一直冷淡”，也不能把没有结束的冲突压成“双方已和好”。
 
 ## 三层之间是什么关系？
 
@@ -160,4 +175,4 @@ Markdown 工作流以审核后的正文为正式记录，版本操作覆盖全�
 
 [来源与取舍](references/sources.md)说明对 Smart Memory 等实现的选择性借鉴，没有复制上游代码或承诺首创。
 
-English: Two objective slices of story reality, plus a subjective projection of previously recognized personal experience through the character's present state of mind. New knowledge requires authorized perception; a change of interpretation does not reveal hidden objective facts.
+English: Preserve faithful chronological trajectories and concise objective and subjective event outlines, rather than scene-level detail. Two objective slices of story reality support each character's evolving subjective projection. Older low-impact material can be compacted while preserving key transitions, unresolved events and knowledge boundaries.
