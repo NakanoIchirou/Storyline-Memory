@@ -20,3 +20,13 @@ find-skills 查找 `agent memory` 与 `context compression` 后，核查了以�
 三层设计可自洽的前提是：宏观层不等于全部事件，第三层不等于全部历史心理档案的直接注入，心境不能凭空带入未知客观事实，事实与AI心理推断不能混合，版本和原文溯源不另立叙事权威。引用标识用于关联三层内的共同事件，不建立第四份完整故事。心境变化应追加当下理解，而不覆盖角色当时的主观历史。
 
 本版的 JSON 文件工具仅为可回滚操作与角色包检查提供机械辅助；摘要仍是 LLM 按 Skill 做的语义提取。没有复制上游实现，没有安装这些候选 Skill，没有新增 API 服务、数据库或向量检索。
+
+## 2026-10-13：规整与读取指令补充
+
+按用户要求重新通过 find-skills 搜索 context compression 与 memory consolidation，查看 skills.sh 目录并核查上游 Skill。context-compression 当次 CLI 显示 409 安装；其仓库 GitHub API 显示 18,116 stars。热度仅辅助筛选，不证明叙事有效性。
+
+- [context-compression 原文](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/main/skills/context-compression/SKILL.md)：借鉴新增片段合并、标识保留、压缩后探针与完整任务成本。转换为三层归档的事件、来源、未知边界和认知转折核查。不采用自动上下文阈值、不可读编码压缩或上游压缩率保证。
+- [context-optimization 原文](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering/blob/main/skills/context-optimization/SKILL.md)：借鉴按任务范围读取、避免重复输入、预算分配与实测成本。转换为每名角色只加载相关第三层与获准场景；不采用自动调度、缓存运行时或固定百分比阈值。
+- [deep-agents-memory 原文](https://github.com/langchain-ai/langchain-skills/blob/main/config/skills/deep-agents-memory/SKILL.md)：再次核查文件持久化与读取范围。保留原文可回查思路，不新增 Deep Agents 框架或平行记忆库。
+
+上述借鉴由本项目指令重新表述，见 consolidation.md。没有安装候选 Skill 或复制代码；规整仍由归档侧 LLM 执行，12 项机械测试不能当作压缩效果证明。
